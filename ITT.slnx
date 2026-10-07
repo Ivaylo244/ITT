@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="ITT/ITT.vbproj" Id="549bde6f-2216-41f0-bf9c-701914f79415">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>

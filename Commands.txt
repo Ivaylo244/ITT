@@ -1,0 +1,48 @@
+Imports Autodesk.AutoCAD.Runtime
+
+Public Class CmdBINX
+
+    <CommandMethod("BINX")>
+    Public Sub RunBINX()
+
+        Dim frm As New Form1()
+        frm.ShowDialog()
+
+    End Sub
+
+End Class
+
+Public Class cmdBTRANS
+    <CommandMethod("BTRANS")>
+    Public Sub RunBTRANS()
+        Dim frm As New fBTRANSvbNet()
+        frm.ShowDialog()
+    End Sub
+
+End Class
+
+Public Class cmdfCVE
+    <CommandMethod("fCVE")>
+    Public Sub RunCVE()
+        Dim frm As New fCVE()
+        frm.ShowDialog()
+    End Sub
+
+End Class
+
+Public Class cmdSHARK
+    <CommandMethod("SHARK")>
+    Public Sub RunSHARK()
+        Dim frm As New fSHARK()
+        frm.ShowDialog()
+    End Sub
+End Class
+Public Class cmdLENDIM
+    <CommandMethod("LENDIM")>
+    Public Sub RunSHARK()
+        Dim frm As New frmLENDIM()
+        frm.ShowDialog()
+    End Sub
+End Class
+
+

@@ -1,0 +1,3 @@
+C:\Program Files (x86)\Autodesk\ApplicationPlugins\IvoTools.bundle\Contents\Windows
+
+C:\Program Files\Autodesk\ApplicationPlugins\IvoTools.bundle\Contents\Windows

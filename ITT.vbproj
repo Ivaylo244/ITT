@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <ProjectGuid>{549BDE6F-2216-41F0-BF9C-701914F79415}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ITT</RootNamespace>
+    <AssemblyName>ITT</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DocumentationFile>ITT.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>ITT.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="accoremgd, Version=24.2.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLLs ACAD 2023\accoremgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acdbmgd, Version=24.2.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLLs ACAD 2023\acdbmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acmgd, Version=24.2.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLLs ACAD 2023\acmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AeccDbMgd">
+      <HintPath>..\DLLs ACAD 2023\AeccDbMgd.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands.vb" />
+    <Compile Include="CURB.vb" />
+    <Compile Include="fBINX.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fBINX.Designer.vb">
+      <DependentUpon>fBINX.vb</DependentUpon>
+    </Compile>
+    <Compile Include="fBREG.Designer.vb">
+      <DependentUpon>fBREG.vb</DependentUpon>
+    </Compile>
+    <Compile Include="fBREG.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fBTRANSNew.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fBTRANSvbNet.Designer.vb">
+      <DependentUpon>fBTRANSNew.vb</DependentUpon>
+    </Compile>
+    <Compile Include="fCVE.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fCVE.Designer.vb">
+      <DependentUpon>fCVE.vb</DependentUpon>
+    </Compile>
+    <Compile Include="fP2B.Designer.vb" />
+    <Compile Include="fP2B.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLENDIM.Designer.vb">
+      <DependentUpon>frmLENDIM.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmLENDIM.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRATT.Designer.vb">
+      <DependentUpon>frmRATT.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmRATT.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fSHARK.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fSHARK.Designer.vb">
+      <DependentUpon>fSHARK.vb</DependentUpon>
+    </Compile>
+    <Compile Include="IvoTools.vb" />
+    <Compile Include="MenuCreator.vb" />
+    <Compile Include="PTXT.vb" />
+    <Compile Include="TEstITT.vb" />
+    <Compile Include="VTransITT.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="fBINX.resx">
+      <DependentUpon>fBINX.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fBREG.resx">
+      <DependentUpon>fBREG.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fBTRANSvbNet.resx">
+      <DependentUpon>fBTRANSNew.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fCVE.resx">
+      <DependentUpon>fCVE.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fP2B.resx" />
+    <EmbeddedResource Include="frmLENDIM.resx">
+      <DependentUpon>frmLENDIM.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRATT.resx">
+      <DependentUpon>frmRATT.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fSHARK.resx">
+      <DependentUpon>fSHARK.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>

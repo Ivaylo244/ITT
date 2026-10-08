@@ -1,6 +1,59 @@
-﻿Imports AcApp = Autodesk.AutoCAD.ApplicationServices.Application
+﻿
+Imports System
+Imports AcApp = Autodesk.AutoCAD.ApplicationServices.Application
 
 Public Class MenuCreator
+
+    Private Const MENU_NAME As String = "IVO TOOLS"
+
+    Private Shared Sub WriteLog(message As String)
+        Dim doc = AcApp.DocumentManager.MdiActiveDocument
+
+        If doc IsNot Nothing Then
+            doc.Editor.WriteMessage(vbLf & message)
+        End If
+    End Sub
+
+    Private Shared Function FindMenu(menuGroup As Object,
+                                     menuName As String) As Object
+
+        For i As Integer = 0 To CInt(menuGroup.Menus.Count) - 1
+
+            Dim m As Object = menuGroup.Menus.Item(i)
+
+            If String.Equals(CStr(m.Name),
+                             menuName,
+                             StringComparison.OrdinalIgnoreCase) Then
+                Return m
+            End If
+
+        Next
+
+        Return Nothing
+    End Function
+
+    Private Shared Function CreateSubMenu(parentMenu As Object,
+                                          title As String) As Object
+
+        Dim subMenu As Object =
+            parentMenu.AddSubMenu(CInt(parentMenu.Count) + 1, title)
+
+        Return subMenu
+    End Function
+
+    Private Shared Sub AddCommand(targetMenu As Object,
+                                  caption As String,
+                                  commandName As String)
+
+        Dim macro As String =
+            ChrW(3) & ChrW(3) & "_." & commandName & " "
+
+        targetMenu.AddMenuItem(
+            CInt(targetMenu.Count) + 1,
+            caption,
+            macro
+        )
+    End Sub
 
     Public Shared Sub CreateMenu()
 
@@ -9,105 +62,98 @@ Public Class MenuCreator
             Dim menuBar As Object = acadApp.MenuBar
             Dim menuGroup As Object = acadApp.MenuGroups.Item(0)
 
-            ' Първо махаме IVO TOOLS от MenuBar, ако вече е добавено
-            For i As Integer = menuBar.Count - 1 To 0 Step -1
+            Dim mainMenu As Object = FindMenu(menuGroup, MENU_NAME)
+
+            If mainMenu IsNot Nothing Then
+
                 Try
-                    Dim mbItem As Object = menuBar.Item(i)
-                    If UCase(CStr(mbItem.Name)) = "IVO TOOLS" Then
-                        mbItem.RemoveFromMenuBar()
-                    End If
+                    mainMenu.RemoveFromMenuBar()
                 Catch
                 End Try
-            Next
 
-            ' После трием старото popup меню IVO TOOLS
-            For i As Integer = menuGroup.Menus.Count - 1 To 0 Step -1
-                Try
-                    Dim m As Object = menuGroup.Menus.Item(i)
-                    If UCase(CStr(m.Name)) = "IVO TOOLS" Then
-                        Try : m.RemoveFromMenuBar() : Catch : End Try
-                        Try : m.Delete() : Catch : End Try
-                    End If
-                Catch
-                End Try
-            Next
+                ' Изчистваме старите елементи.
+                For i As Integer = CInt(mainMenu.Count) - 1 To 0 Step -1
+                    mainMenu.Item(i).Delete()
+                Next
 
-            ' Създаваме ново меню
-            Dim mainMenu As Object = menuGroup.Menus.Add("IVO TOOLS")
+            Else
+                mainMenu = menuGroup.Menus.Add(MENU_NAME)
+            End If
 
-            mainMenu.AddMenuItem(mainMenu.Count + 1, "Вмъкване на блокове - BINX", "BINX ")
-            mainMenu.AddMenuItem(mainMenu.Count + 1, "Извеждане на координати на линия - CVE", "fCVE ")
-            mainMenu.AddMenuItem(mainMenu.Count + 1, "Привързване на текст с блок - SHARK", "SHARK ")
-            mainMenu.AddMenuItem(mainMenu.Count + 1, "Трансформации - BTRANS", "BTRANS ")
-            mainMenu.addmenuitem(mainMenu.count + 1, "Оразмеряване на линии - LENDIM", "LENDIM" & vbCr)
-            mainMenu.addmenuitem(mainMenu.count + 1, "Запис на блокове в отделен файл - BREG", "BREG" & vbCr)
-            mainMenu.addmenuitem(mainMenu.count + 1, "Площ по контур - AREATXT", "AREATXT" & vbCr)
-            mainMenu.addmenuitem(mainMenu.count + 1, "Закръгляне на атрубити - RATT", "RATT" & vbCr)
-            mainMenu.addmenuitem(mainMenu.count + 1, "Вдигане на фасада - FAS3", "FAS3" & vbCr)
-            mainMenu.addmenuitem(mainMenu.count + 1, "Конвертиране на точки към блокове - P2B" & vbCr)
-            mainMenu.addmenuitem(mainMenu.count + 1, "Запис на точки във файл - PTXT" & vbCr)
-            mainMenu.addmenuitem(mainMenu.count + 1, "Котиране на бордюр горе - CURB" & vbCr)
+            ' ======================================
+            ' БЛОКОВЕ
+            ' ======================================
 
-            mainMenu.InsertInMenuBar(menuBar.Count + 1)
+            Dim blocksMenu As Object =
+                CreateSubMenu(mainMenu, "Блокове")
 
+            AddCommand(blocksMenu, "Вмъкване на блокове - BINX", "BINX")
+            AddCommand(blocksMenu, "Запис на блокове във файл - BREG", "BREG")
+            AddCommand(blocksMenu, "Конвертиране на точки към блокове - P2B", "P2B")
+            AddCommand(blocksMenu, "Котиране на бордюр - CURB", "CURB")
+            AddCommand(blocksMenu, "Извеждане на координати на линия - CVE", "fCVE")
+            AddCommand(blocksMenu, "Привързване на текст с блок - SHARK", "SHARK")
+            AddCommand(blocksMenu, "Закръгляне на атрибути - RATT", "RATT")
+
+            ' ======================================
+            ' СЛОЕВЕ
+            ' ======================================
+
+            Dim layersMenu As Object =
+                CreateSubMenu(mainMenu, "Слоеве")
+
+            ' Бъдещи команди за слоеве.
+            ' Не добавяме фиктивни команди.
+
+            ' ======================================
+            ' ОРАЗМЕРЯВАНЕ
+            ' ======================================
+
+            Dim dimMenu As Object =
+                CreateSubMenu(mainMenu, "Оразмеряване")
+
+            AddCommand(dimMenu, "Оразмеряване на линии - LENDIM", "LENDIM")
+            AddCommand(dimMenu, "Площ по контур - AREATXT", "AREATXT")
+
+            ' ======================================
+            ' ТОЧКИ
+            ' ======================================
+
+            Dim pointsMenu As Object =
+                CreateSubMenu(mainMenu, "Точки")
+
+            AddCommand(pointsMenu, "Запис на точки във файл - PTXT", "PTXT")
+
+            ' ======================================
+            ' ТРАНСФОРМАЦИИ
+            ' ======================================
+
+            Dim transMenu As Object =
+                CreateSubMenu(mainMenu, "Трансформации")
+
+            AddCommand(transMenu, "Трансформации - BTRANS", "BTRANS")
+
+            ' ======================================
+            ' ДРУГИ
+            ' ======================================
+
+            Dim otherMenu As Object =
+                CreateSubMenu(mainMenu, "Други")
+
+            AddCommand(otherMenu, "Вдигане на фасада - FAS3", "FAS3")
+
+            ' ======================================
+            ' ПОКАЗВАНЕ В MENUBAR
+            ' ======================================
+
+            mainMenu.InsertInMenuBar(CInt(menuBar.Count) + 1)
             acadApp.Update()
 
-            Dim doc = AcApp.DocumentManager.MdiActiveDocument
-            If doc IsNot Nothing Then
-                doc.Editor.WriteMessage(vbLf & "IVO TOOLS менюто е създадено успешно.")
-            End If
+            WriteLog("IVO TOOLS менюто е заредено успешно.")
 
-        Catch ex As Exception
-
-            Dim doc = AcApp.DocumentManager.MdiActiveDocument
-            If doc IsNot Nothing Then
-                doc.Editor.WriteMessage(vbLf & "Грешка при създаване на менюто: " & ex.Message)
-            End If
-
+        Catch ex As System.Exception
+            WriteLog("Грешка при създаване на менюто: " & ex.ToString())
         End Try
-
     End Sub
 
-    <Autodesk.AutoCAD.Runtime.CommandMethod("IVOTOOLSUNLOAD")>
-    Public Shared Sub RemoveMenu()
-
-        Try
-            Dim acadApp As Object = AcApp.AcadApplication
-            Dim menuBar As Object = acadApp.MenuBar
-
-            For i As Integer = menuBar.Count - 1 To 0 Step -1
-
-                Try
-                    Dim mbItem As Object = menuBar.Item(i)
-
-                    If UCase(CStr(mbItem.Name)) = "IVO TOOLS" Then
-                        mbItem.RemoveFromMenuBar()
-                    End If
-
-                Catch
-                End Try
-
-            Next
-
-            acadApp.Update()
-
-            Dim doc = AcApp.DocumentManager.MdiActiveDocument
-
-            If doc IsNot Nothing Then
-                doc.Editor.WriteMessage(
-                    vbLf & "IVO TOOLS е премахнато от MenuBar-а.")
-            End If
-
-        Catch ex As Exception
-
-            Dim doc = AcApp.DocumentManager.MdiActiveDocument
-
-            If doc IsNot Nothing Then
-                doc.Editor.WriteMessage(
-                    vbLf & "Грешка: " & ex.Message)
-            End If
-
-        End Try
-
-    End Sub
 End Class
